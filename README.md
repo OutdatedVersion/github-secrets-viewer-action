@@ -37,6 +37,14 @@ Tested against:
 - Node v16
 - `ubuntu-22.04`
 
+## Similar things
+
+- Similar process with OpenSSL
+  - Meir Gabay posted
+    [a how-to article](https://meirg.co.il/2022/07/01/how-to-recover-secrets-from-github-actions/)
+    on their website and
+    [on GitHub Discussions](https://github.com/orgs/community/discussions/26277#discussioncomment-3251166)
+
 ## Wishlist
 
 - Support protected keys
