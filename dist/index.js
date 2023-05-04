@@ -19,6 +19,9 @@ const node_child_process_1 = __importDefault(__nccwpck_require__(718));
 const run = async (env = process.env) => {
     (0, node_assert_1.default)(!!env.INPUT_SECRETS, 'env.INPUT_SECRETS must be set');
     (0, node_assert_1.default)(!!env['INPUT_GPG-PUBLIC-KEY'], 'env.INPUT_GPG-PUBLIC-KEY must be set');
+    console.log('::group::GPG version');
+    console.log(node_child_process_1.default.execSync('gpg --version').toString().trim());
+    console.log('::endgroup::');
     const importOutput = node_child_process_1.default
         .spawnSync('gpg', ['-vv', '--import', '-'], {
         input: env['INPUT_GPG-PUBLIC-KEY'],
@@ -29,6 +32,7 @@ const run = async (env = process.env) => {
         .find((line) => line.trim().startsWith('keyid:'))
         ?.trim()
         .substring('keyid: '.length);
+    (0, node_assert_1.default)(!!publicKeyId, 'could not figure out public key ID');
     console.log('[info] Imported GPG public key');
     const tmpDir = await promises_1.default.mkdtemp(node_path_1.default.join(node_os_1.default.tmpdir(), 'secrets'));
     console.log(`[debug] Using directory ${tmpDir}`);
@@ -55,6 +59,7 @@ const run = async (env = process.env) => {
         .split('\n')
         .find((line) => line.includes('GitHub secrets viewer'))
         ?.match(/"(.+) GitHub secrets viewer"/i)?.[1];
+    (0, node_assert_1.default)(!!secretKeyId, 'could not figure out secret key ID');
     await promises_1.default.writeFile(node_path_1.default.join(tmpDir, 'content'), env.INPUT_SECRETS, {
         encoding: 'utf8',
     });

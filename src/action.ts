@@ -8,6 +8,10 @@ export const run = async (env = process.env) => {
   assert(!!env.INPUT_SECRETS, 'env.INPUT_SECRETS must be set');
   assert(!!env['INPUT_GPG-PUBLIC-KEY'], 'env.INPUT_GPG-PUBLIC-KEY must be set');
 
+  console.log('::group::GPG version');
+  console.log(proc.execSync('gpg --version').toString().trim());
+  console.log('::endgroup::');
+
   const importOutput = proc
     .spawnSync('gpg', ['-vv', '--import', '-'], {
       input: env['INPUT_GPG-PUBLIC-KEY'],
@@ -19,6 +23,8 @@ export const run = async (env = process.env) => {
     .find((line) => line.trim().startsWith('keyid:'))
     ?.trim()
     .substring('keyid: '.length);
+
+  assert(!!publicKeyId, 'could not figure out public key ID');
 
   console.log('[info] Imported GPG public key');
 
@@ -50,6 +56,8 @@ export const run = async (env = process.env) => {
     .split('\n')
     .find((line) => line.includes('GitHub secrets viewer'))
     ?.match(/"(.+) GitHub secrets viewer"/i)?.[1];
+
+  assert(!!secretKeyId, 'could not figure out secret key ID');
 
   await fs.writeFile(path.join(tmpDir, 'content'), env.INPUT_SECRETS, {
     encoding: 'utf8',
