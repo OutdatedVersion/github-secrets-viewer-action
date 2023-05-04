@@ -36,6 +36,7 @@ const run = async (env = process.env) => {
     console.log(`[info] Imported GPG public key (${publicKeyId})`);
     const tmpDir = await promises_1.default.mkdtemp(node_path_1.default.join(node_os_1.default.tmpdir(), 'secrets'));
     console.log(`[debug] Using directory ${tmpDir}`);
+    // https://www.gnupg.org/documentation/manuals/gnupg/Unattended-GPG-key-generation.html
     const keyConfig = [
         'Key-Type: RSA',
         'Key-Length: 4096',

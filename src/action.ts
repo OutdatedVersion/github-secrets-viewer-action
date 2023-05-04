@@ -31,6 +31,7 @@ export const run = async (env = process.env) => {
   const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'secrets'));
   console.log(`[debug] Using directory ${tmpDir}`);
 
+  // https://www.gnupg.org/documentation/manuals/gnupg/Unattended-GPG-key-generation.html
   const keyConfig = [
     'Key-Type: RSA',
     'Key-Length: 4096',

@@ -13,12 +13,13 @@ remove, the output on disk however works for you.
 
 The exact code GitHub will run can be audited at `dist/index.js`.
 
-## Usage
+## Example usage
 
 ```yaml
-- uses: outdatedversion/github-secrets-viewer@v1
+- uses: outdatedversion/github-secrets-viewer-action@v1
   id: viewer
   with:
+    # Public key (`gpg --armor --export <keyId>`) set in a GitHub repository variable
     gpg-public-key: ${{ vars.GPG_PUBLIC_KEY }}
     secrets: |
       accessToken=${{ secrets.ACCESS_TOKEN }}
@@ -30,20 +31,36 @@ The exact code GitHub will run can be audited at `dist/index.js`.
     path: ${{ steps.viewer.outputs.path }}
 ```
 
+The run will look something like:
+
+![run screenshot](./docs/run-screenshot.jpg)
+
+Then, after download and unzipping the artifact, you can view it:
+
+```console
+$ gpg -d secrets.gpg
+gpg: encrypted with 4096-bit RSA key, ID 9C591F0F99FE28CE, created 2022-11-05
+      "Ben Watkins <hi@bwatkins.dev>"
+accessToken=abc
+password=$$##^@($&AAJKHFJKH333
+```
+
 ## Support
 
 Tested against:
 
-- Node v16
-- `ubuntu-22.04`
+- Node.js v16 actions runtime
+- gpg (GnuPG) 2.2.27 (used by `ubuntu-22.04`)
+
+This will probably work with other Linux runner images.
+
+Feel free to open a pull request or issue if you run into issues or have thoughts.
 
 ## Similar things
 
-- Similar process with OpenSSL
-  - Meir Gabay posted
-    [a how-to article](https://meirg.co.il/2022/07/01/how-to-recover-secrets-from-github-actions/)
-    on their website and
-    [on GitHub Discussions](https://github.com/orgs/community/discussions/26277#discussioncomment-3251166)
+- Meir Gabay posted a how-to article on using OpenSSL to protect sensitive content in actions on
+  [their website](https://meirg.co.il/2022/07/01/how-to-recover-secrets-from-github-actions/) and
+  [on GitHub Discussions](https://github.com/orgs/community/discussions/26277#discussioncomment-3251166)
 
 ## Wishlist
 
