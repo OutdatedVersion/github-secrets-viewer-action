@@ -5,7 +5,7 @@ jobs:
   test:
     runs-on: ubuntu-22.04
     steps:
-      - uses: outdatedversion/github-secrets-viewer-action@v1
+      - uses: outdatedversion/github-secrets-viewer-action@main
         id: viewer
         with:
           gpg-public-key: ${{ vars.GPG_PUBLIC_KEY }}
