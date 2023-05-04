@@ -1,8 +1,15 @@
-name: abc
-description: idk
+name: GitHub secrets viewer
+description: Encrypts provided input and outputs a path to the file
+inputs:
+  secrets:
+    description: Content to encrypt
+    required: true
+  gpg-public-key:
+    description: Public key to encrypt against
+    required: true
 outputs:
-  json:
-    description: abc
+  path:
+    description: Absolute path to the GPG encrypted secret file
 runs:
   using: node16
   main: dist/index.js
