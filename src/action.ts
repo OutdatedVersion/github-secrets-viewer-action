@@ -57,7 +57,7 @@ export const run = async (env = process.env) => {
     .find((line) => line.includes('GitHub secrets viewer'))
     ?.match(/"(.+) GitHub secrets viewer"/i)?.[1];
 
-  assert(!!secretKeyId, 'could not figure out secret key ID');
+  assert(!!secretKeyId, 'could not figure out secret key ID: ' + keygenOutput);
 
   await fs.writeFile(path.join(tmpDir, 'content'), env.INPUT_SECRETS, {
     encoding: 'utf8',
