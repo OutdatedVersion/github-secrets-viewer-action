@@ -37,7 +37,7 @@ const run = async (env = process.env) => {
     const tmpDir = await promises_1.default.mkdtemp(node_path_1.default.join(node_os_1.default.tmpdir(), 'secrets'));
     console.log(`[debug] Using directory ${tmpDir}`);
     const keyConfig = [
-        'Key-Type: RSA and RSA',
+        'Key-Type: RSA',
         'Key-Length: 4096',
         'Key-Usage: encrypt',
         'Subkey-Type: 1',

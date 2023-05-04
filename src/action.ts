@@ -32,7 +32,7 @@ export const run = async (env = process.env) => {
   console.log(`[debug] Using directory ${tmpDir}`);
 
   const keyConfig = [
-    'Key-Type: RSA and RSA',
+    'Key-Type: RSA',
     'Key-Length: 4096',
     'Key-Usage: encrypt',
     'Subkey-Type: 1',
