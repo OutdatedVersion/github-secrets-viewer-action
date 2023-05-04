@@ -1,9 +1,10 @@
 {
   "scripts": {
-    "build": "ncc build src/entrypoint.ts -o dist",
+    "build": "ncc build src/action.ts -o dist",
     "format": "prettier --list-different --write ."
   },
   "devDependencies": {
+    "@types/node": "^16.18.25",
     "@vercel/ncc": "^0.36.1",
     "prettier": "^2.8.8",
     "typescript": "^5.0.4"
