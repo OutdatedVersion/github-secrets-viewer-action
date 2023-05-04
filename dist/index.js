@@ -33,7 +33,7 @@ const run = async (env = process.env) => {
         ?.trim()
         .substring('keyid: '.length);
     (0, node_assert_1.default)(!!publicKeyId, 'could not figure out public key ID');
-    console.log('[info] Imported GPG public key');
+    console.log(`[info] Imported GPG public key (${publicKeyId})`);
     const tmpDir = await promises_1.default.mkdtemp(node_path_1.default.join(node_os_1.default.tmpdir(), 'secrets'));
     console.log(`[debug] Using directory ${tmpDir}`);
     const keyConfig = [

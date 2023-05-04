@@ -26,7 +26,7 @@ export const run = async (env = process.env) => {
 
   assert(!!publicKeyId, 'could not figure out public key ID');
 
-  console.log('[info] Imported GPG public key');
+  console.log(`[info] Imported GPG public key (${publicKeyId})`);
 
   const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'secrets'));
   console.log(`[debug] Using directory ${tmpDir}`);
