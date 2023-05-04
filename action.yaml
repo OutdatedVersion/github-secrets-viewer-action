@@ -1,0 +1,8 @@
+name: abc
+description: idk
+outputs:
+  json:
+    description: abc
+runs:
+  using: node16
+  main: dist/index.js
