@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: 'bundler'
+    directory: '/'
+    assignees:
+      - 'outdatedversion'
+    rebase-strategy: auto
+    allow:
+      - dependency-type: direct
+    schedule:
+      interval: weekly
+    groups:
+      build-toolchain:
+        patterns:
+          - '@vercel/ncc'
+          - 'typescript'
