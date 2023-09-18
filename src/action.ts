@@ -5,7 +5,10 @@ import path from 'node:path';
 import proc from 'node:child_process';
 
 export const run = async (env = process.env) => {
-  assert(!!env.INPUT_SECRETS, 'env.INPUT_SECRETS must be set');
+  assert(
+    !!env.INPUT_SECRETS || !!env['INPUT_SECRETS-PATH'],
+    'env.INPUT_SECRETS or env.INPUT_SECRETS-PATH must be set'
+  );
   assert(!!env['INPUT_GPG-PUBLIC-KEY'], 'env.INPUT_GPG-PUBLIC-KEY must be set');
 
   console.log('::group::GPG version');
@@ -60,9 +63,20 @@ export const run = async (env = process.env) => {
 
   assert(!!secretKeyId, 'could not figure out secret key ID: ' + keygenOutput);
 
-  await fs.writeFile(path.join(tmpDir, 'content'), env.INPUT_SECRETS, {
-    encoding: 'utf8',
-  });
+  const secretContentPath = path.join(tmpDir, 'content');
+
+  if (env.INPUT_SECRETS) {
+    await fs.appendFile(secretContentPath, `${env.INPUT_SECRETS.trim()}\n`, {
+      encoding: 'utf8',
+    });
+  }
+
+  if (env['INPUT_SECRETS-PATH']) {
+    const p = path.resolve(env['INPUT_SECRETS-PATH']);
+    const contents = await fs.readFile(p);
+    await fs.appendFile(path.join(tmpDir, 'content'), contents, { encoding: 'utf8' });
+    console.log(`[debug] Content from '${p}' included`);
+  }
 
   const encryptCmd = [
     'gpg',
@@ -90,7 +104,7 @@ export const run = async (env = process.env) => {
     await fs.appendFile(env.GITHUB_OUTPUT, `path=${path.join(tmpDir, 'secrets.gpg')}`);
   }
 
-  await fs.rm(path.join(tmpDir, 'content'));
+  await fs.rm(secretContentPath);
 };
 
 run();

@@ -2,8 +2,20 @@ name: GitHub secrets viewer
 description: Encrypts provided input and outputs a path to the file
 inputs:
   secrets:
-    description: Content to encrypt
-    required: true
+    description: |
+      **`inputs.secrets` and/or `inputs.secrets-path` must be provided**
+      Content to encrypt
+
+      Heads up: Leading/trailing whitespace is trimmed
+    required: false
+  secrets-path:
+    description: |
+      **`inputs.secrets` and/or `inputs.secrets-path` must be provided**
+      Relative/absolute path to additional secrets
+
+      If `inputs.secrets` is provided, the contents of this file will be
+      appended to `inputs.secrets`
+    required: false
   gpg-public-key:
     description: Public key to encrypt against
     required: true
