@@ -16,7 +16,7 @@ The exact code GitHub will run can be audited at `dist/index.js`.
 ## Example usage
 
 ```yaml
-- uses: outdatedversion/github-secrets-viewer-action@v1
+- uses: outdatedversion/github-secrets-viewer-action@v1.1
   id: viewer
   with:
     # Public key (`gpg --armor --export <keyId>`) set in a GitHub repository variable
@@ -48,7 +48,7 @@ password=$$##^@($&AAJKHFJKH333
 You could also load secrets from a file if that's more convenient:
 
 ```yaml
-- uses: outdatedversion/github-secrets-viewer-action@v1
+- uses: outdatedversion/github-secrets-viewer-action@v1.1
   id: viewer
   with:
     # Public key (`gpg --armor --export <keyId>`) set in a GitHub repository variable
