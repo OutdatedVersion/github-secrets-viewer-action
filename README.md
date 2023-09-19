@@ -45,7 +45,8 @@ accessToken=abc
 password=$$##^@($&AAJKHFJKH333
 ```
 
-You could also load secrets from a file if that's more convenient:
+<details>
+  <summary>You could also load secrets from a file if that's more convenient:</summary>
 
 ```yaml
 - uses: outdatedversion/github-secrets-viewer-action@v1.1
@@ -62,6 +63,8 @@ You could also load secrets from a file if that's more convenient:
 ```
 
 Note: `secrets-path` (e.g. `build.env`) is _not_ automatically deleted after `viewer` runs
+
+</details>
 
 ## Support
 
