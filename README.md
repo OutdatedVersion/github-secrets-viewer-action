@@ -45,6 +45,8 @@ accessToken=abc
 password=$$##^@($&AAJKHFJKH333
 ```
 
+I recommend removing these steps when you're done debugging.
+
 <details>
   <summary>You could also load secrets from a file if that's more convenient:</summary>
 
