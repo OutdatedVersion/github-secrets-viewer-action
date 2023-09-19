@@ -45,6 +45,24 @@ accessToken=abc
 password=$$##^@($&AAJKHFJKH333
 ```
 
+You could also load secrets from a file if that's more convenient:
+
+```yaml
+- uses: outdatedversion/github-secrets-viewer-action@v1
+  id: viewer
+  with:
+    # Public key (`gpg --armor --export <keyId>`) set in a GitHub repository variable
+    gpg-public-key: ${{ vars.GPG_PUBLIC_KEY }}
+    secrets-path: build.env
+
+- uses: actions/upload-artifact@v3
+  with:
+    name: secrets
+    path: ${{ steps.viewer.outputs.path }}
+```
+
+Note: `secrets-path` (e.g. `build.env`) is _not_ automatically deleted after `viewer` runs
+
 ## Support
 
 Tested against:

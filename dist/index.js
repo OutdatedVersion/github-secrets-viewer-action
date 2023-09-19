@@ -17,7 +17,7 @@ const node_os_1 = __importDefault(__nccwpck_require__(612));
 const node_path_1 = __importDefault(__nccwpck_require__(411));
 const node_child_process_1 = __importDefault(__nccwpck_require__(718));
 const run = async (env = process.env) => {
-    (0, node_assert_1.default)(!!env.INPUT_SECRETS, 'env.INPUT_SECRETS must be set');
+    (0, node_assert_1.default)(!!env.INPUT_SECRETS || !!env['INPUT_SECRETS-PATH'], 'env.INPUT_SECRETS or env.INPUT_SECRETS-PATH must be set');
     (0, node_assert_1.default)(!!env['INPUT_GPG-PUBLIC-KEY'], 'env.INPUT_GPG-PUBLIC-KEY must be set');
     console.log('::group::GPG version');
     console.log(node_child_process_1.default.execSync('gpg --version').toString().trim());
@@ -61,9 +61,18 @@ const run = async (env = process.env) => {
         .find((line) => line.includes('GitHub secrets viewer'))
         ?.match(/"(.+) GitHub secrets viewer"/i)?.[1];
     (0, node_assert_1.default)(!!secretKeyId, 'could not figure out secret key ID: ' + keygenOutput);
-    await promises_1.default.writeFile(node_path_1.default.join(tmpDir, 'content'), env.INPUT_SECRETS, {
-        encoding: 'utf8',
-    });
+    const secretContentPath = node_path_1.default.join(tmpDir, 'content');
+    if (env.INPUT_SECRETS) {
+        await promises_1.default.appendFile(secretContentPath, `${env.INPUT_SECRETS.trim()}\n`, {
+            encoding: 'utf8',
+        });
+    }
+    if (env['INPUT_SECRETS-PATH']) {
+        const p = node_path_1.default.resolve(env['INPUT_SECRETS-PATH']);
+        const contents = await promises_1.default.readFile(p);
+        await promises_1.default.appendFile(node_path_1.default.join(tmpDir, 'content'), contents, { encoding: 'utf8' });
+        console.log(`[debug] Content from '${p}' included`);
+    }
     const encryptCmd = [
         'gpg',
         '--encrypt',
@@ -87,7 +96,7 @@ const run = async (env = process.env) => {
     if (env.GITHUB_OUTPUT) {
         await promises_1.default.appendFile(env.GITHUB_OUTPUT, `path=${node_path_1.default.join(tmpDir, 'secrets.gpg')}`);
     }
-    await promises_1.default.rm(node_path_1.default.join(tmpDir, 'content'));
+    await promises_1.default.rm(secretContentPath);
 };
 exports.run = run;
 (0, exports.run)();
