@@ -8,7 +8,7 @@ This approach uses GPG, commonly used for signing commits in the Git community, 
 provided content.
 
 A GPG private key will be generated on every invocation of this action. That private key is used in
-conjunction with a public key you provide to encrypt the provided content. You may than access, and
+conjunction with a public key you provide to encrypt the provided content. You may then access, and
 remove, the output on disk however works for you.
 
 The exact code GitHub will run can be audited at `dist/index.js`.
