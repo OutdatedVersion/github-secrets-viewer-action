@@ -8,7 +8,7 @@ import proc from 'node:child_process';
 export const run = async (env = process.env) => {
   assert(
     !!env.INPUT_SECRETS || !!env['INPUT_SECRETS-PATH'],
-    'env.INPUT_SECRETS or env.INPUT_SECRETS-PATH must be set'
+    'env.INPUT_SECRETS or env.INPUT_SECRETS-PATH must be set',
   );
   assert(!!env['INPUT_GPG-PUBLIC-KEY'], 'env.INPUT_GPG-PUBLIC-KEY must be set');
 
