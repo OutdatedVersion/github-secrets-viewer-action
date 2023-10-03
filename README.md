@@ -11,7 +11,7 @@ A GPG private key will be generated on every invocation of this action. That pri
 conjunction with a public key you provide to encrypt the provided content. You may than access, and
 remove, the output on disk however works for you.
 
-The exact code GitHub will run can be audited at `dist/index.js`.
+The exact code GitHub will run can be audited at `src/action.js`.
 
 ## Example usage
 
