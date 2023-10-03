@@ -1,3 +1,4 @@
+// @ts-check
 import assert from 'node:assert';
 import fs from 'node:fs/promises';
 import os from 'node:os';
@@ -7,7 +8,7 @@ import proc from 'node:child_process';
 export const run = async (env = process.env) => {
   assert(
     !!env.INPUT_SECRETS || !!env['INPUT_SECRETS-PATH'],
-    'env.INPUT_SECRETS or env.INPUT_SECRETS-PATH must be set'
+    'env.INPUT_SECRETS or env.INPUT_SECRETS-PATH must be set',
   );
   assert(!!env['INPUT_GPG-PUBLIC-KEY'], 'env.INPUT_GPG-PUBLIC-KEY must be set');
 
@@ -74,7 +75,7 @@ export const run = async (env = process.env) => {
   if (env['INPUT_SECRETS-PATH']) {
     const p = path.resolve(env['INPUT_SECRETS-PATH']);
     const contents = await fs.readFile(p);
-    await fs.appendFile(path.join(tmpDir, 'content'), contents, { encoding: 'utf8' });
+    await fs.appendFile(secretContentPath, contents, { encoding: 'utf8' });
     console.log(`[debug] Content from '${p}' included`);
   }
 

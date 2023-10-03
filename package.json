@@ -1,12 +1,10 @@
 {
+  "type": "module",
   "scripts": {
-    "build": "ncc build src/action.ts -o dist",
     "format": "prettier --list-different --write ."
   },
   "devDependencies": {
-    "@types/node": "^16.18.25",
-    "@vercel/ncc": "^0.36.1",
-    "prettier": "^2.8.8",
-    "typescript": "^5.0.4"
+    "@types/node": "^20.8.2",
+    "prettier": "^3.0.3"
   }
 }

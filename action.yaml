@@ -23,5 +23,5 @@ outputs:
   path:
     description: Absolute path to the GPG encrypted secret file
 runs:
-  using: node16
-  main: dist/index.js
+  using: node20
+  main: src/action.js
