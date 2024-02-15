@@ -73,7 +73,7 @@ Note: `secrets-path` (e.g. `build.env`) is _not_ automatically deleted after `vi
 
 Tested against:
 
-- Node.js v16 actions runtime
+- Node.js v20 actions runtime
 - gpg (GnuPG) 2.2.27 (used by `ubuntu-22.04`)
 
 This will probably work with other Linux runner images.
